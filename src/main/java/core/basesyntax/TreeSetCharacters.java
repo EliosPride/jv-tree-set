@@ -26,7 +26,7 @@ public class TreeSetCharacters {
     public String getUniqueCharacters(String fileName) throws FileNotFoundException {
         TreeSet<Character> charSet = new TreeSet<>();
         StringBuilder charBuilder = new StringBuilder();
-        String resultString = new String();
+        String resultString = "";
         File file = new File(fileName);
         if (!file.exists()) {
             throw new FileNotFoundException("File doesn't exist.");
