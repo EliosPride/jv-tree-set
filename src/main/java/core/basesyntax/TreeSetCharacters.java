@@ -1,6 +1,10 @@
 package core.basesyntax;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.TreeSet;
 
 /**
  * <p>Реалізуйте метод `getUniqueCharacters(String fileName)` який приймає як параметр назву файлу.
@@ -19,7 +23,33 @@ import java.io.FileInputStream;
  * Результат 2: acf</p>
  */
 public class TreeSetCharacters {
-    public String getUniqueCharacters(String fileName) {
-        return null;
+    public String getUniqueCharacters(String fileName) throws FileNotFoundException {
+        TreeSet<Character> charSet = new TreeSet<>();
+        StringBuilder charBuilder = new StringBuilder();
+        String resultString = new String();
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new FileNotFoundException("File doesn't exist.");
+        }
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            while (fileInputStream.available() > 0) {
+                char alphabetChar = (char) fileInputStream.read();
+                if (Character.isLetter(alphabetChar)) {
+                    charSet.add(Character.toLowerCase(alphabetChar));
+                }
+            }
+            for (Character nextCharacter : charSet) {
+                charBuilder.append(nextCharacter);
+            }
+            resultString = charBuilder.toString();
+            if (charBuilder.length() > 5) {
+                return resultString.substring(0, 5);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File doesn't exist.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 }
