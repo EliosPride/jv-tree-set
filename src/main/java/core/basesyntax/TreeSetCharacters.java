@@ -23,10 +23,9 @@ import java.util.TreeSet;
  * Результат 2: acf</p>
  */
 public class TreeSetCharacters {
-    public String getUniqueCharacters(String fileName) throws FileNotFoundException {
+    public String getUniqueCharacters(String fileName) throws IOException {
         TreeSet<Character> charSet = new TreeSet<>();
         StringBuilder charBuilder = new StringBuilder();
-        String resultString = "";
         File file = new File(fileName);
         if (!file.exists()) {
             throw new FileNotFoundException("File doesn't exist.");
@@ -40,16 +39,11 @@ public class TreeSetCharacters {
             }
             for (Character nextCharacter : charSet) {
                 charBuilder.append(nextCharacter);
+                }
+            if (charBuilder.length() < 5) {
+                return charBuilder.substring(0);
             }
-            resultString = charBuilder.toString();
-            if (charBuilder.length() > 5) {
-                return resultString.substring(0, 5);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File doesn't exist.");
-        } catch (IOException e) {
-            e.printStackTrace();
+            return charBuilder.substring(0, 5);
         }
-        return resultString;
     }
 }
