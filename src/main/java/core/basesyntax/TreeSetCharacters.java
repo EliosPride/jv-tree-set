@@ -23,10 +23,11 @@ import java.util.TreeSet;
  * Результат 2: acf</p>
  */
 public class TreeSetCharacters {
+    private final static int MAX_LENGTH = 5;
+
     public String getUniqueCharacters(String fileName) throws IOException {
         TreeSet<Character> charSet = new TreeSet<>();
         StringBuilder charBuilder = new StringBuilder();
-        int iterator = 5;
         File file = new File(fileName);
         if (!file.exists()) {
             throw new FileNotFoundException("File doesn't exist.");
@@ -40,15 +41,11 @@ public class TreeSetCharacters {
             }
             for (Character nextCharacter : charSet) {
                 charBuilder.append(nextCharacter);
-                iterator++;
-                if (iterator == 5) {
+                if (charBuilder.length() == MAX_LENGTH) {
                     break;
                 }
             }
-            if (charBuilder.length() < 5) {
-                return charBuilder.substring(0);
-            }
-            return charBuilder.substring(0, 5);
+            return charBuilder.toString();
         }
     }
 }
