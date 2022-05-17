@@ -1,6 +1,10 @@
 package core.basesyntax;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.TreeSet;
 
 /**
  * <p>Реалізуйте метод `getUniqueCharacters(String fileName)` який приймає як параметр назву файлу.
@@ -19,7 +23,29 @@ import java.io.FileInputStream;
  * Результат 2: acf</p>
  */
 public class TreeSetCharacters {
-    public String getUniqueCharacters(String fileName) {
-        return null;
+    private final static int MAX_LENGTH = 5;
+
+    public String getUniqueCharacters(String fileName) throws IOException {
+        TreeSet<Character> charSet = new TreeSet<>();
+        StringBuilder charBuilder = new StringBuilder();
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new FileNotFoundException("File doesn't exist.");
+        }
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            while (fileInputStream.available() > 0) {
+                char alphabetChar = (char) fileInputStream.read();
+                if (Character.isLetter(alphabetChar)) {
+                    charSet.add(Character.toLowerCase(alphabetChar));
+                }
+            }
+            for (Character nextCharacter : charSet) {
+                charBuilder.append(nextCharacter);
+                if (charBuilder.length() == MAX_LENGTH) {
+                    break;
+                }
+            }
+            return charBuilder.toString();
+        }
     }
 }
